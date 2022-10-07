@@ -1,0 +1,223 @@
+{
+    "name": "JSON Composed Example",
+    "description": null,
+    "permissions": "PUBLIC_READ_ONLY",
+    "pages": [
+      {
+        "name": "JSON Composed Example",
+        "description": null,
+        "widgets": [
+
+                %{~ for index, api in CONFIG  ~}
+                %{ if index!=0 },
+                %{ endif }
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 1,
+                        "row": ${(index * 4) + 1 },
+                        "width": 12,
+                        "height": 1
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.markdown"
+                    },
+                    "rawConfiguration": {
+                        "text": "# ${api.name} (${api.domain})"
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 1,
+                        "row": ${(index * 4) + 2 },
+                        "width": 2,
+                        "height": 3
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.billboard"
+                    },
+                    "rawConfiguration": {
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT count(*) as 'API Calls (last hour)' from Public_APICall where api='${api.domain}' since 1 hour ago"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": true
+                        }
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 3,
+                        "row": ${(index * 4) + 2 },
+                        "width": 1,
+                        "height": 2
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.billboard"
+                    },
+                    "rawConfiguration": {
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT count(*) as 'API Calls (last day)' from Public_APICall where api='${api.domain}' since 1 day ago"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": true
+                        }
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 4,
+                        "row": ${(index * 4) + 2 },
+                        "width": 1,
+                        "height": 3
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.billboard"
+                    },
+                    "rawConfiguration": {
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT average(duration) as 'Avg Duration',percentile(duration,95) as 'p95 Duration'  from Public_APICall  where api='${api.domain}'"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": true
+                        },
+                        "thresholds": [
+                        {
+                            "alertSeverity": "CRITICAL",
+                            "value": 0.3
+                        }
+                        ]
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 5,
+                        "row": ${(index * 4) + 2 },
+                        "width": 4,
+                        "height": 3
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.line"
+                    },
+                    "rawConfiguration": {
+                        "colors": {
+                        "seriesOverrides": [
+                            {
+                            "color": "#2ecd36",
+                            "seriesName": "p95 Duration (95%)"
+                            },
+                            {
+                            "color": "#41b7c8",
+                            "seriesName": "Avg Duration"
+                            }
+                        ]
+                        },
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "legend": {
+                        "enabled": true
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT average(duration) as 'Avg Duration',percentile(duration,95) as 'p95 Duration'  from Public_APICall  where api='${api.domain}' timeseries 1 hour since 1 week ago"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": false
+                        },
+                        "yAxisLeft": {
+                        "zero": false
+                        }
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 9,
+                        "row": ${(index * 4) + 2 },
+                        "width": 4,
+                        "height": 3
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.stacked-bar"
+                    },
+                    "rawConfiguration": {
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "legend": {
+                        "enabled": false
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT count(*) as 'Call breakdown'  from Public_APICall  where api='${api.domain}' facet http.url timeseries 6 hour since 1 week ago limit 25"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": false
+                        }
+                    }
+                    },
+                    {
+                    "title": "",
+                    "layout": {
+                        "column": 3,
+                        "row": ${(index * 4) + 4 },
+                        "width": 1,
+                        "height": 1
+                    },
+                    "linkedEntityGuids": null,
+                    "visualization": {
+                        "id": "viz.billboard"
+                    },
+                    "rawConfiguration": {
+                        "facet": {
+                        "showOtherSeries": false
+                        },
+                        "nrqlQueries": [
+                        {
+                            "accountId": ${ACCOUNTID},
+                            "query": "SELECT count(*) as 'API Calls (last week)' from Public_APICall where api='${api.domain}' since 1 week ago"
+                        }
+                        ],
+                        "platformOptions": {
+                        "ignoreTimeRange": true
+                        }
+                    }
+                    }
+                %{ endfor ~}
+            ]
+        }
+    ]
+}

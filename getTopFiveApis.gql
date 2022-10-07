@@ -1,0 +1,9 @@
+query ($accountId: Int!) {
+  actor {
+    account(id: $accountId) {
+      nrql(query: "SELECT count(*) from Public_APICall facet api as domain  since 1 day ago limit 5") {
+        results
+      }
+    }
+  }
+}
