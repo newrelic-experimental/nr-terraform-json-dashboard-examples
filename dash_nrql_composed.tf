@@ -23,8 +23,8 @@ data "graphql_query" "basic_query" {
 
 
 # This generates the 'rows' of widgets from the CONFIG object
-data "template_file" "nrql_widgets" {
-    template = templatefile(
+locals {
+  composed_render = templatefile(
                "${path.module}/dashboards/nrql_composed_widgets.json.tftpl",
                {
                  ACCOUNTID = var.accountId
@@ -34,7 +34,7 @@ data "template_file" "nrql_widgets" {
 }
 
 resource "newrelic_one_dashboard_json" "nrql_dashboard" {
-   json = data.template_file.nrql_widgets.rendered
+   json = local.composed_render
 }
 
 #Lets tag terraform managed dashboards!

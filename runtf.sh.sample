@@ -5,4 +5,4 @@
 export NEW_RELIC_ACCOUNT_ID="0" # Your account ID
 export NEW_RELIC_API_KEY="NRAK-xxx" # A User API Key
 
-bash -c "terraform $1 $2 -var=\"accountId=${NEW_RELIC_ACCOUNT_ID}\""
+bash -c "terraform $1 $2 -var=\"accountId=${NEW_RELIC_ACCOUNT_ID}\" -var=\"NEW_RELIC_API_KEY=${NEW_RELIC_API_KEY}\""
