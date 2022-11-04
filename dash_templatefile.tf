@@ -1,7 +1,7 @@
 
-# Here we domnstrate using a templatefile. For dashboards with many replacement values this may be cleaner than using replace().
-data "template_file" "json" {
-    template = templatefile(
+# Here we demonstrate using a templatefile. For dashboards with many replacement values this may be cleaner than using replace().
+locals {
+    templatefile_render = templatefile(
                "${path.module}/dashboards/dashboard.json.tftpl",
                {
                 DASHBOARD_NAME = "JSON - Templatefile dashboard"
@@ -11,7 +11,7 @@ data "template_file" "json" {
 }
 
 resource "newrelic_one_dashboard_json" "templatefile_dashboard" {
-   json = data.template_file.json.rendered
+   json = local.templatefile_render
 }
 
 #Lets tag terraform managed dashboards!

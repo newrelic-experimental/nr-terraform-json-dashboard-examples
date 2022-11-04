@@ -6,9 +6,8 @@ variable "config" {
   }))
 }
 
-# This generates the 'rows' of widgets from the CONFIG object
-data "template_file" "widgets" {
-    template = templatefile(
+locals {
+  template_render = templatefile(
                "${path.module}/dashboards/composed_widgets.json.tftpl",
                {
                  ACCOUNTID = var.accountId
@@ -18,7 +17,7 @@ data "template_file" "widgets" {
 }
 
 resource "newrelic_one_dashboard_json" "composed_dashboard" {
-   json = data.template_file.widgets.rendered
+   json = local.template_render
 }
 
 #Lets tag terraform managed dashboards!
@@ -36,5 +35,5 @@ output "composed_dashboard" {
 
 # uncomment this to see the json src thats composed (useful if you make a mistake!)
 # output "composed_dashboard_src" {
-#   value=data.template_file.container.rendered 
+#   value=local.template_render 
 # }
