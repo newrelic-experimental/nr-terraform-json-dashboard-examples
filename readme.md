@@ -12,7 +12,7 @@ Make sure terraform is installed. I recommend [tfenv](https://github.com/tfutils
 
 Update the `runtf.sh.sample` file with your credentials and accont details and rename it `runtf.sh`. **Important do not commit this new file to git!** (It should be ignored in `.gitignore` already)
 
-Note: You may want to update the version numbers in [main.tf](main.tf) to the latest versions of  Terraform and the New Relic provider.
+Note: You may want to update the version numbers in [provider.tf](provider.tf) to the latest versions of  Terraform and the New Relic provider.
 
 ## Initialisation
 Use the `runtf.sh` helper script where ever you would normally run `terraform`. It simply wraps the terraform with some environment variables that make it easier to switch between projects. (You dont have to do it this way, you could just set the env vars and run terraform normally)
