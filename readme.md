@@ -8,14 +8,14 @@ This example shows how you can use the [newrelic_one_dashboards_json](https://re
 * [dash_nrql_composed.tf](dash_nrql_composed.tf) - this example extneds the previous and shows how a complex dashboard can be built using template iteration driven by an NRQL query that determines what items to include.
 
 ## Installation
-Make sure terraform is installed. I recommend [tfenv](https://github.com/tfutils/tfenv) for managing your terraform binaries.
+Make sure [terraform is installed](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli). I highly recommend using the super-useful terraform version manager [tfenv](https://github.com/tfutils/tfenv) for managing your terraform binaries. 
 
-Update the `runtf.sh.sample` file with your credentials and accont details and rename it `runtf.sh`. **Important do not commit this new file to git!** (It should be ignored in `.gitignore` already)
+This project includes a helper script to run terraform with the necessary configuration. Update the `runtf.sh.sample` file with your credentials and accont details and rename it `runtf.sh`. **Important do not commit this new file to git!** (It should be ignored in `.gitignore` already)
 
-Note: You may want to update the version numbers in [provider.tf](provider.tf) to the latest versions of  Terraform and the New Relic provider.
+Note: You may want to update the version numbers in [provider.tf](provider.tf) to the latest versions of Terraform and the New Relic provider. You must be using New Relic provider version 3.4.0 or above for JSON dashboards to be supported.
 
 ## Initialisation
-Use the `runtf.sh` helper script where ever you would normally run `terraform`. It simply wraps the terraform with some environment variables that make it easier to switch between projects. (You dont have to do it this way, you could just set the env vars and run terraform normally)
+Use the `runtf.sh` helper script configured aboe wherever you would normally run `terraform`. It simply wraps the terraform with some environment variables that make it easier to switch between projects. (You dont have to do it this way, you could just set the env vars and run terraform normally)
 
 First initialise terraform:
 ```
